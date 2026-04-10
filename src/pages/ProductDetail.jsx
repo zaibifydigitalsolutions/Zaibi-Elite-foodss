@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, Minus, Plus, Heart, Clock, Star } from 'lucide-react';
+import { ChevronLeft, Minus, Plus, Heart, Clock, Star, Share2, ShieldCheck, Flame } from 'lucide-react';
 import { products } from '../data/products';
 
 const ProductDetail = () => {
@@ -8,76 +8,179 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const product = products.find(p => p.id === parseInt(id));
   const [quantity, setQuantity] = useState(1);
+  const [scrollY, setScrollY] = useState(0);
 
-  if (!product) return <div>Product Not Found</div>;
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  if (!product) return <div className="flex-center" style={{ height: '100vh' }}><h2>Product Not Found</h2></div>;
+
+  const handleAddToCart = () => {
+    // Show a success micro-interaction (simplified here for brevity)
+    navigate('/cart');
+  };
 
   return (
-    <div style={{ paddingBottom: '100px', backgroundColor: '#F8F9FA', minHeight: '100vh' }}>
+    <div style={{ paddingBottom: '120px', backgroundColor: '#FFFFFF', minHeight: '100vh' }}>
       
-      {/* Header Image */}
-      <div style={{ position: 'relative', width: '100%', height: '350px' }}>
-        <button 
-          onClick={() => navigate(-1)} 
-          style={{ position: 'absolute', top: '24px', left: '20px', background: 'rgba(255,255,255,0.95)', width: '48px', height: '48px', borderRadius: '50%', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
-        >
-            <ChevronLeft size={24} color="#111111" />
-        </button>
-        <button 
-          style={{ position: 'absolute', top: '24px', right: '20px', background: 'rgba(255,255,255,0.95)', width: '48px', height: '48px', borderRadius: '50%', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
-        >
-            <Heart size={24} color="var(--primary)" />
-        </button>
-        <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      {/* Immersive Header Image with Parallax */}
+      <div style={{ 
+        position: 'relative', 
+        width: '100%', 
+        height: '420px', 
+        overflow: 'hidden',
+        background: '#111'
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          transform: `translateY(${scrollY * 0.4}px) scale(${1 + scrollY * 0.001})`,
+          transition: 'transform 0.1s ease-out'
+        }}>
+          <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
+          <div style={{ position: 'absolute', bottom: 0, left:0, right: 0, height: '150px', background: 'linear-gradient(transparent, rgba(0,0,0,0.4))' }}></div>
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="flex-between" style={{ position: 'fixed', top: '20px', left: '20px', right: '20px', zIndex: 1000 }}>
+          <button 
+            onClick={() => navigate(-1)} 
+            className="flex-center"
+            style={{ width: '45px', height: '45px', borderRadius: '15px', background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)', backdropFilter: 'blur(10px)' }}
+          >
+              <ChevronLeft size={22} color="white" />
+          </button>
+          <div className="flex-center" style={{ gap: '12px' }}>
+            <button className="flex-center" style={{ width: '45px', height: '45px', borderRadius: '15px', background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)', backdropFilter: 'blur(10px)' }}>
+                <Share2 size={20} color="white" />
+            </button>
+            <button className="flex-center" style={{ width: '45px', height: '45px', borderRadius: '15px', background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)', backdropFilter: 'blur(10px)' }}>
+                <Heart size={20} color="white" />
+            </button>
+          </div>
+        </div>
       </div>
       
-      {/* Product Info Overlay */}
-      <div style={{ marginTop: '-40px', position: 'relative', background: '#FFFFFF', borderTopLeftRadius: '32px', borderTopRightRadius: '32px', paddingTop: '32px', paddingBottom: '32px', paddingLeft: '24px', paddingRight: '24px', minHeight: '50vh', boxShadow: '0 -10px 40px rgba(0,0,0,0.04)' }}>
+      {/* Product Content Container */}
+      <div style={{ 
+        marginTop: '-50px', 
+        position: 'relative', 
+        background: '#FFFFFF', 
+        borderTopLeftRadius: '40px', 
+        borderTopRightRadius: '40px', 
+        paddingTop: '35px', 
+        paddingBottom: '40px', 
+        paddingLeft: '24px', 
+        paddingRight: '24px', 
+        boxShadow: '0 -20px 60px rgba(0,0,0,0.1)' 
+      }}>
         
-        {/* Title & Price */}
-        <div className="flex-between mb-2" style={{ alignItems: 'flex-start' }}>
-          <h1 style={{ fontSize: '28px', fontWeight: '800', maxWidth: '70%', lineHeight: '1.2', color: '#111111' }}>{product.name}</h1>
-          <h2 style={{ fontSize: '26px', color: '#111111', fontWeight: '800' }}>${product.price.toFixed(2)}</h2>
+        {/* Category & Badge */}
+        <div className="flex-between mb-2">
+            <span style={{ color: 'var(--primary)', fontWeight: '700', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{product.category} Selection</span>
+            <div className="flex-center" style={{ background: '#FFF0ED', color: 'var(--primary)', padding: '4px 12px', borderRadius: '8px', fontSize: '0.8rem', fontWeight: '800', gap: '4px' }}>
+                <Flame size={14} /> Popular Item
+            </div>
         </div>
 
-        {/* Dynamic Tags */}
-        <div className="flex-center mb-3" style={{ justifyContent: 'flex-start', gap: '12px' }}>
-          <div className="flex-center" style={{ gap: '6px', color: '#FFB000', fontWeight: '700', fontSize: '15px' }}>
-             <Star size={20} fill="#FFB000" /> {product.rating}
-             <span style={{color: '#888888', fontWeight: '500', marginLeft: '2px'}}>(4.8k)</span>
+        {/* Title & Info */}
+        <h1 style={{ fontSize: '32px', fontWeight: '900', color: '#111', lineHeight: '1.1', marginBottom: '16px' }}>{product.name}</h1>
+        
+        <div className="flex-center mb-4" style={{ justifyContent: 'flex-start', gap: '20px' }}>
+          <div className="flex-center" style={{ gap: '6px' }}>
+             <Star size={18} fill="#FFB000" color="#FFB000" /> 
+             <span style={{ fontWeight: '800', fontSize: '1rem' }}>{product.rating}</span>
+             <span style={{ color: '#999', fontSize: '0.9rem', marginLeft: '2px' }}>(2.4k+ Reviews)</span>
           </div>
-          <div className="flex-center" style={{ gap: '6px', color: '#111111', fontWeight: '600', fontSize: '15px', marginLeft: '8px' }}>
-             <Clock size={18} color="var(--primary)" /> 45 min
+          <div className="flex-center" style={{ gap: '6px', paddingLeft: '20px', borderLeft: '1px solid #EEE' }}>
+             <Clock size={16} color="var(--primary)" />
+             <span style={{ fontWeight: '700', fontSize: '0.95rem' }}>20-30 min</span>
           </div>
         </div>
 
-        <hr style={{ border: 'none', borderTop: '2px dashed #F5F5F5', margin: '24px 0' }} />
+        <p style={{ color: '#666', fontSize: '1.05rem', lineHeight: '1.6', marginBottom: '30px' }}>
+            {product.description} Crafted with premium ingredients and our secret house spices. Experience culinary excellence in every bite.
+        </p>
 
-        {/* Text Desc */}
-        <h3 className="mb-2" style={{ fontSize: '18px', fontWeight: '800', color: '#111111' }}>Details</h3>
-        <p style={{ color: '#777777', lineHeight: '1.7', fontSize: '15px' }}>{product.description} Prepared fresh to order and safely delivered hot with our premium containers to ensure maximal quality. Includes complementary signature dips.</p>
+        {/* Features Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '30px' }}>
+            <div style={{ padding: '15px', background: '#F9F9F9', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <ShieldCheck size={20} color="#10B981" />
+                <span style={{ fontWeight: '700', fontSize: '0.9rem' }}>Quality Assured</span>
+            </div>
+            <div style={{ padding: '15px', background: '#F9F9F9', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Flame size={20} color="#FF470B" />
+                <span style={{ fontWeight: '700', fontSize: '0.9rem' }}>Freshly Cooked</span>
+            </div>
+        </div>
+
       </div>
 
-      {/* Modern Sticky Action Bar */}
-      <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, padding: '24px', background: '#FFFFFF', borderTopLeftRadius: '32px', borderTopRightRadius: '32px', boxShadow: '0 -10px 40px rgba(0,0,0,0.06)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
-          
-          <div className="flex-center" style={{ background: '#F8F9FA', borderRadius: '50px', padding: '6px', border: '1px solid #EAEAEA' }}>
-            <button 
+      {/* Floating Checkout Bar */}
+      <div style={{ 
+        position: 'fixed', 
+        bottom: '24px', 
+        left: '20px', 
+        right: '20px', 
+        padding: '16px', 
+        background: '#111', 
+        borderRadius: '24px', 
+        boxShadow: '0 20px 40px rgba(0,0,0,0.3)', 
+        zIndex: 1000, 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'space-between',
+        animation: 'fadeInUp 0.6s ease'
+      }}>
+          <div className="flex-center" style={{ gap: '15px', marginLeft: '10px' }}>
+             <button 
                 onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#FFFFFF', fontWeight: 'bold', display:'flex', alignItems:'center', justifyContent:'center', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-                <Minus size={20} color="#111111" />
-            </button>
-            <span style={{ fontSize: '18px', fontWeight: '800', margin: '0 20px', color: '#111111' }}>{quantity}</span>
-            <button 
+                style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(255,255,255,0.1)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none' }}>
+                <Minus size={18} />
+             </button>
+             <span style={{ fontSize: '1.3rem', fontWeight: '800', color: 'white', minWidth: '20px', textAlign: 'center' }}>{quantity}</span>
+             <button 
                 onClick={() => setQuantity(q => q + 1)}
-                style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#111111', color: 'white', fontWeight: 'bold', display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <Plus size={20} color="white" />
-            </button>
+                style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(255,255,255,0.1)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none' }}>
+                <Plus size={18} />
+             </button>
           </div>
 
-          <button className="btn-primary" style={{ flex: 1, height: '60px', fontSize: '17px', borderRadius: '16px', boxShadow: '0 8px 24px rgba(255, 71, 11, 0.25)' }} onClick={() => navigate('/cart')}>
-             Add to order
+          <button 
+            className="flex-center" 
+            onClick={handleAddToCart}
+            style={{ 
+              background: 'var(--primary-gradient)', 
+              color: 'white', 
+              padding: '0 25px', 
+              height: '56px', 
+              borderRadius: '18px', 
+              fontWeight: '800', 
+              fontSize: '1rem',
+              gap: '12px',
+              border: 'none',
+              boxShadow: '0 10px 20px rgba(255, 71, 11, 0.3)',
+              cursor: 'pointer'
+            }}>
+             <span>Add to Cart</span>
+             <span style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.3)' }}></span>
+             <span>${(product.price * quantity).toFixed(2)}</span>
           </button>
       </div>
+      
+      {/* Global CSS for the animation */}
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(100px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 };

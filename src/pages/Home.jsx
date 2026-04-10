@@ -20,10 +20,29 @@ const testimonials = [
 
 const doubledTestimonials = [...testimonials, ...testimonials];
 
-const Home = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const filteredProducts = products.filter(p => activeCategory === "All" || p.category === activeCategory);
   const [openFaq, setOpenFaq] = useState(null);
+  const [currentBanner, setCurrentBanner] = useState(0);
+
+  // Auto-slide banners every 2 seconds
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBanner(prev => (prev + 1) % 3);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Update scroll position when currentBanner changes
+  React.useEffect(() => {
+    const container = document.querySelector('.banners-container');
+    if (container) {
+      container.scrollTo({
+        left: currentBanner * container.offsetWidth,
+        behavior: 'smooth'
+      });
+    }
+  }, [currentBanner]);
 
   return (
     <div className="container home-page fade-in" style={{ paddingBottom: '120px', overflowX: 'hidden' }}>
@@ -76,34 +95,40 @@ const Home = () => {
       <div className="banners-container mb-4">
         <div className="promo-banner" style={{ 
           background: 'var(--primary-gradient)',
-          backgroundImage: 'linear-gradient(135deg, #FF6B00 0%, #FF470B 100%)'
+          backgroundImage: 'linear-gradient(135deg, #FF6B00 0%, #FF470B 100%)',
+          transition: 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          cursor: 'pointer'
         }}>
           <div className="promo-content">
             <span className="badge">Special Offer</span>
-            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2rem'}}>30% Daily<br/>Discount!</h2>
+            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2.2rem', fontWeight: '900'}}>30% Daily<br/>Discount!</h2>
             <button className="btn-white">Order Now</button>
           </div>
           <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&q=80&w=800" alt="Burger" className="promo-img" />
         </div>
 
         <div className="promo-banner" style={{ 
-          background: 'linear-gradient(135deg, #FFB000 0%, #FF8A00 100%)'
+          background: 'linear-gradient(135deg, #FFB000 0%, #FF8A00 100%)',
+          transition: 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          cursor: 'pointer'
         }}>
           <div className="promo-content">
             <span className="badge">Limited Time</span>
-            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2rem'}}>Free Delivery<br/>on Pizzas</h2>
+            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2.2rem', fontWeight: '900'}}>Free Delivery<br/>on Pizzas</h2>
             <button className="btn-white">Claim Free</button>
           </div>
           <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=80&w=800" alt="Pizza" className="promo-img" />
         </div>
 
         <div className="promo-banner" style={{ 
-          background: 'linear-gradient(135deg, #111111 0%, #333333 100%)'
+          background: 'linear-gradient(135deg, #111111 0%, #333333 100%)',
+          transition: 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+          cursor: 'pointer'
         }}>
           <div className="promo-content">
             <span className="badge" style={{ background: '#FFD700', color: 'black' }}>Gourmet</span>
-            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2rem'}}>Premium<br/>Family Feast</h2>
-            <button className="btn-primary" style={{ height: '44px', width: 'auto', padding: '0 20px' }}>Grab Deal</button>
+            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2.2rem', fontWeight: '900'}}>Premium<br/>Family Feast</h2>
+            <button className="btn-primary" style={{ height: '48px', width: 'auto', padding: '0 24px', fontSize: '15px' }}>Grab Deal</button>
           </div>
           <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=800" alt="Feast" className="promo-img" />
         </div>
