@@ -320,7 +320,7 @@ export const products = [
     name: "Chocolate Fondue",
     price: 11.49,
     category: "Desserts",
-    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=500&q=80",
+    image: "https://images.unsplash.com/photo-1579954115545-a95591f28be0?auto=format&fit=crop&w=500&q=80",
     description: "Rich chocolate melted for dipping fresh fruits and marshmallows.",
     rating: 4.9
   },
@@ -338,7 +338,7 @@ export const products = [
     name: "Lobster Bisque",
     price: 14.99,
     category: "Soups",
-    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=500&q=80",
+    image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=500&q=80",
     description: "Creamy bisque made with fresh lobster meat and a hint of sherry.",
     rating: 4.9
   },
@@ -374,7 +374,7 @@ export const products = [
     name: "Chocolate Espresso Martini",
     price: 8.99,
     category: "Drinks",
-    image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80",
+    image: "https://images.unsplash.com/photo-1545438102-793c79d33ebb?auto=format&fit=crop&w=500&q=80",
     description: "A sophisticated cocktail with vodka, espresso, and chocolate liqueur.",
     rating: 4.9
   },

@@ -15,15 +15,9 @@ const testimonials = [
   { name: "Mike T.", text: "The pizza is authentic and always arrives hot.", rating: 5 },
   { name: "Jessica R.", text: "I order the Truffle Fries weekly. Absolute perfection.", rating: 4 },
   { name: "Daniel K.", text: "Amazing vegan options, highly recommended.", rating: 5 },
-  { name: "Emily C.", text: "Customer service is top notch and the food is great.", rating: 5 },
-  { name: "Tom B.", text: "The combo deals save me so much money for family dinners.", rating: 4 },
-  { name: "Ashley V.", text: "Can't live without their fresh lemonade and wings.", rating: 5 },
-  { name: "Chris P.", text: "Very easy to use app and the food is top tier.", rating: 5 },
-  { name: "Nicole Y.", text: "I've never had a late order. Absolutely love it.", rating: 5 },
-  { name: "David M.", text: "Great interface and even better cheeseburgers.", rating: 4 }
+  { name: "Emily C.", text: "Customer service is top notch and the food is great.", rating: 5 }
 ];
 
-// Duplicate for infinite marquee logic
 const doubledTestimonials = [...testimonials, ...testimonials];
 
 const Home = () => {
@@ -32,213 +26,186 @@ const Home = () => {
   const [openFaq, setOpenFaq] = useState(null);
 
   return (
-    <div className="container home-page" style={{ paddingBottom: '110px', overflowX: 'hidden' }}>
+    <div className="container home-page fade-in" style={{ paddingBottom: '120px', overflowX: 'hidden' }}>
       
-      {/* Header */}
-      <div className="flex-between mb-3" style={{ alignItems: 'center' }}>
-        <div className="flex-center gap-1" style={{ backgroundColor: 'var(--surface)', padding: '8px 16px', borderRadius: 'var(--radius-pill)', boxShadow: 'var(--shadow-sm)' }}>
-          <div style={{ background: 'var(--primary)', borderRadius: '50%', padding: '4px', display: 'flex' }}>
-             <MapPin size={14} color="white" />
+      {/* Premium Header */}
+      <div className="flex-between mb-4">
+        <div>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: '500' }}>Deliver to</p>
+          <div className="flex-center gap-1" style={{ cursor: 'pointer' }}>
+            <span style={{ fontWeight: '700', fontSize: '1.1rem' }}>Jl. Soekarno Hatta 15A</span>
+            <ChevronDown size={18} color="var(--primary)" />
           </div>
-          <span style={{ fontWeight: '600', fontSize: '13px' }}>Jl. Soekarno Hatta 15A</span>
-          <ChevronDown size={14} />
         </div>
-        <div className="user-avatar" style={{ boxShadow: 'var(--shadow-sm)' }}>
-          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=60" alt="User" />
+        <div className="glass-card" style={{ padding: '10px', borderRadius: '50%', boxShadow: 'var(--shadow-sm)' }}>
+           <MapPin size={22} color="var(--primary)" />
         </div>
       </div>
 
-      {/* Greeting */}
-      <div className="mb-3">
-        <h1 style={{ fontSize: '32px' }}>Fastest <br/>delivery <span style={{ color: 'var(--primary)' }}>🔥</span></h1>
+      {/* Dynamic Greeting */}
+      <div className="mb-4">
+        <h1 style={{ marginBottom: '4px' }}>Fastest</h1>
+        <h1 style={{ color: 'var(--primary)' }}>Delivery Food ⚡</h1>
       </div>
 
-      {/* Search */}
-      <div className="search-bar mb-3">
-        <Search size={22} color="var(--text-primary)" />
-        <input type="text" placeholder="Search categories or items..." />
+      {/* Modern Search */}
+      <div className="search-bar mb-4" style={{ 
+        background: '#F3F4F6', 
+        padding: '16px 20px', 
+        borderRadius: '20px', 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '12px' 
+      }}>
+        <Search size={22} color="#9CA3AF" />
+        <input 
+          type="text" 
+          placeholder="Search your favorite food..." 
+          style={{ 
+            background: 'none', 
+            border: 'none', 
+            width: '100%', 
+            fontSize: '1rem', 
+            outline: 'none',
+            fontWeight: '500'
+          }} 
+        />
       </div>
 
-      {/* 3 Main Banners */}
-      <div className="banners-container mb-3">
-        <div className="promo-banner" style={{ background: 'linear-gradient(135deg, #FF6B00 0%, #FF470B 100%)' }}>
+      {/* Main Feature Banners - Immersive 3D Slider */}
+      <div className="banners-container mb-4">
+        <div className="promo-banner" style={{ 
+          background: 'var(--primary-gradient)',
+          backgroundImage: 'linear-gradient(135deg, #FF6B00 0%, #FF470B 100%)'
+        }}>
           <div className="promo-content">
-            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '24px'}}>Get your 30% daily<br/>discount now!</h2>
-            <button className="btn-dark mt-2">Order now</button>
+            <span className="badge">Special Offer</span>
+            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2rem'}}>30% Daily<br/>Discount!</h2>
+            <button className="btn-white">Order Now</button>
           </div>
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80" alt="Promo" className="promo-img"/>
+          <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&q=80&w=800" alt="Burger" className="promo-img" />
         </div>
-        <div className="promo-banner" style={{ background: 'linear-gradient(135deg, #FFB000 0%, #FF8A00 100%)' }}>
+
+        <div className="promo-banner" style={{ 
+          background: 'linear-gradient(135deg, #FFB000 0%, #FF8A00 100%)'
+        }}>
           <div className="promo-content">
-            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '24px'}}>Free Delivery<br/>on Pizzas</h2>
-            <button className="btn-dark mt-2">Claim Free</button>
+            <span className="badge">Limited Time</span>
+            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2rem'}}>Free Delivery<br/>on Pizzas</h2>
+            <button className="btn-white">Claim Free</button>
           </div>
-          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=300&q=80" alt="Promo" className="promo-img"/>
+          <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=80&w=800" alt="Pizza" className="promo-img" />
         </div>
-        <div className="promo-banner" style={{ background: 'linear-gradient(135deg, #43A047 0%, #81C784 100%)' }}>
+
+        <div className="promo-banner" style={{ 
+          background: 'linear-gradient(135deg, #111111 0%, #333333 100%)'
+        }}>
           <div className="promo-content">
-            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '24px'}}>Fresh & Healthy</h2>
-            <p style={{color: 'rgba(255,255,255,0.9)', marginBottom: '16px'}}>Explore vegan options.</p>
-            <button className="btn-dark mt-1">Explore</button>
+            <span className="badge" style={{ background: '#FFD700', color: 'black' }}>Gourmet</span>
+            <h2 style={{color: 'white', marginBottom: '8px', fontSize: '2rem'}}>Premium<br/>Family Feast</h2>
+            <button className="btn-primary" style={{ height: '44px', width: 'auto', padding: '0 20px' }}>Grab Deal</button>
           </div>
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=300&q=60" alt="Promo" className="promo-img"/>
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=800" alt="Feast" className="promo-img" />
         </div>
       </div>
 
-      {/* Categories */}
-      <div className="mb-3">
-        <h3 className="mb-2" style={{ fontSize: '20px', fontWeight: '800' }}>Categories</h3>
-        <div className="category-list">
+      {/* Sophisticated Categories */}
+      <div className="mb-4">
+        <div className="flex-between mb-3">
+          <h3 style={{ fontSize: '1.4rem' }}>Categories</h3>
+          <span style={{ color: 'var(--primary)', fontWeight: '600', fontSize: '0.9rem' }}>See All</span>
+        </div>
+        <div className="category-list" style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '10px' }}>
           {categories.map((cat, idx) => (
-            <div 
+            <button 
                key={idx} 
                onClick={() => setActiveCategory(cat)}
-               className={`category-item ${activeCategory === cat ? 'active' : ''}`}
+               style={{
+                 padding: '12px 24px',
+                 borderRadius: '16px',
+                 background: activeCategory === cat ? 'var(--primary)' : 'white',
+                 color: activeCategory === cat ? 'white' : 'var(--text-secondary)',
+                 fontWeight: '700',
+                 boxShadow: activeCategory === cat ? '0 10px 20px rgba(255, 71, 11, 0.2)' : 'var(--shadow-sm)',
+                 border: activeCategory === cat ? 'none' : '1px solid #F3F4F6',
+                 whiteSpace: 'nowrap'
+               }}
             >
               {cat}
-            </div>
+            </button>
           ))}
         </div>
       </div>
 
-      {/* Popular Items filter mapped */}
+      {/* Popular Items Showcase */}
       <div className="mb-4">
-        <div className="flex-between mb-2">
-          <h3 style={{ fontSize: '20px', fontWeight: '800' }}>{activeCategory === "All" ? "Popular items 👏" : `${activeCategory} Items`}</h3>
-          <button className="btn-see-all">See all</button>
+        <div className="flex-between mb-3">
+          <h3 style={{ fontSize: '1.4rem' }}>{activeCategory === "All" ? "Top 6 Favorites 🔥" : `${activeCategory} Selections`}</h3>
         </div>
         {filteredProducts.length > 0 ? (
           <div className="products-grid">
-            {filteredProducts.slice(0,6).map((prod) => (
+            {filteredProducts.slice(0, 6).map((prod) => (
               <ProductCard key={prod.id} product={prod} />
             ))}
           </div>
         ) : (
-          <p className="text-secondary" style={{ textAlign: 'center', marginTop: '32px' }}>No items found for this category.</p>
+          <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
+            <p className="text-secondary">No items found in this section.</p>
+          </div>
         )}
       </div>
 
-      {/* 3 Flash Sales Banners Carousel (NEW OFFER SECTION) */}
+      {/* Classical Selection (6 Faws) */}
       <div className="mb-4">
-        <h3 className="mb-2" style={{ fontSize: '20px', fontWeight: '800' }}>Flash Sales ⚡</h3>
-        <div className="banners-container">
-            <div className="promo-banner" style={{ height: '140px', background: 'linear-gradient(135deg, #FF9800 0%, #FF5722 100%)' }}>
-              <div className="promo-content">
-                <h2 style={{color: 'white', marginBottom: '8px', fontSize: '20px'}}>BOGO Burgers</h2>
-                <button className="btn-see-all">Buy 1 Get 1</button>
-              </div>
-              <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80" alt="Promo" className="promo-img" style={{ right: '-30px', bottom: '-40px' }}/>
-            </div>
-            <div className="promo-banner" style={{ height: '140px', background: 'linear-gradient(135deg, #673AB7 0%, #3F51B5 100%)' }}>
-               <div className="promo-content">
-                <h2 style={{color: 'white', marginBottom: '8px', fontSize: '20px'}}>Student Discount</h2>
-                <button className="btn-see-all">20% Off</button>
-              </div>
-              <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=300&q=80" alt="Promo" className="promo-img" style={{ right: '-30px', bottom: '-40px' }}/>
-            </div>
-            <div className="promo-banner" style={{ height: '140px', background: 'linear-gradient(135deg, #CDDC39 0%, #8BC34A 100%)' }}>
-               <div className="promo-content">
-                <h2 style={{color: 'white', marginBottom: '8px', fontSize: '20px'}}>Healthy Hour</h2>
-                <button className="btn-see-all">Half price salads</button>
-              </div>
-              <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80" alt="Promo" className="promo-img" style={{ right: '-30px', bottom: '-40px' }}/>
-            </div>
-        </div>
+          <div className="flex-between mb-3">
+              <h3 style={{ fontSize: '1.4rem' }}>Classical Selection 🍷</h3>
+              <span className="btn-see-all">Explore Menu</span>
+          </div>
+          <div className="products-grid">
+              {products.filter(p => ["Main", "Pizza", "Pasta", "Entrees"].includes(p.category)).slice(0, 6).map((prod) => (
+                  <ProductCard key={prod.id} product={prod} />
+              ))}
+          </div>
       </div>
 
-      {/* 3 Deals Banners Carousel */}
+      {/* Infinite Marquee Styled Testimonials */}
       <div className="mb-4">
-        <h3 className="mb-2" style={{ fontSize: '20px', fontWeight: '800' }}>Exclusive Deals 🎁</h3>
-        <div className="banners-container">
-            <div className="promo-banner" style={{ height: '140px', background: 'linear-gradient(135deg, #111111 0%, #333333 100%)' }}>
-              <div className="promo-content">
-                <h2 style={{color: 'white', marginBottom: '8px', fontSize: '20px'}}>Night Owl Meal</h2>
-                <button className="btn-see-all">Order After 10PM</button>
-              </div>
-              <img src="https://images.unsplash.com/photo-1615486171448-4fdaddcb4e52?auto=format&fit=crop&w=300&q=80" alt="Promo" className="promo-img" style={{ right: '-30px', bottom: '-40px' }}/>
-            </div>
-            <div className="promo-banner" style={{ height: '140px', background: 'linear-gradient(135deg, #F44336 0%, #E53935 100%)' }}>
-               <div className="promo-content">
-                <h2 style={{color: 'white', marginBottom: '8px', fontSize: '20px'}}>Family Feast</h2>
-                <button className="btn-see-all">Save $15 Today</button>
-              </div>
-              <img src="https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=300&q=80" alt="Promo" className="promo-img" style={{ right: '-30px', bottom: '-40px' }}/>
-            </div>
-            <div className="promo-banner" style={{ height: '140px', background: 'linear-gradient(135deg, #00BCD4 0%, #009688 100%)' }}>
-               <div className="promo-content">
-                <h2 style={{color: 'white', marginBottom: '8px', fontSize: '20px'}}>Thirsty Thursday</h2>
-                <button className="btn-see-all">Free Lemonade</button>
-              </div>
-              <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=300&q=80" alt="Promo" className="promo-img" style={{ right: '-30px', bottom: '-40px' }}/>
-            </div>
-        </div>
-      </div>
-
-      {/* Infinite Scrolling Testimonials Marquee */}
-      <div className="mb-4">
-          <h3 className="mb-2" style={{ fontSize: '20px', fontWeight: '800' }}>Happy Foodies ⭐</h3>
-          <div className="testimonials-wrapper">
-            <div className="testimonials-container">
+          <h3 className="mb-3" style={{ fontSize: '1.4rem' }}>Happy Foodies ⭐</h3>
+          <div className="testimonials-wrapper" style={{ overflow: 'hidden' }}>
+            <div className="testimonials-container" style={{ display: 'flex', gap: '20px' }}>
                {doubledTestimonials.map((test, index) => (
-                  <div key={index} className="testimonial-card">
-                     <div style={{ display: 'flex', gap: '4px', marginBottom: '8px' }}>
-                        {[...Array(test.rating)].map((_, i) => <Star key={i} size={14} fill="#FFB000" color="#FFB000" />)}
+                  <div key={index} className="card" style={{ minWidth: '260px', padding: '20px' }}>
+                     <div style={{ display: 'flex', gap: '4px', marginBottom: '12px' }}>
+                        {[...Array(test.rating)].map((_, i) => <Star key={i} size={16} fill="#FFB000" color="#FFB000" />)}
                      </div>
-                     <p style={{ fontStyle: 'italic', color: '#555555', fontSize: '13px', marginBottom: '12px' }}>"{test.text}"</p>
-                     <h4 style={{ fontWeight: '700', fontSize: '14px', color: '#111111' }}>- {test.name}</h4>
+                     <p style={{ color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: '500', marginBottom: '15px' }}>"{test.text}"</p>
+                     <h4 style={{ fontWeight: '700', fontSize: '1rem' }}>{test.name}</h4>
                   </div>
                ))}
             </div>
           </div>
       </div>
 
-      {/* FAQs */}
-      <div className="mb-4">
-         <h3 className="mb-2" style={{ fontSize: '20px', fontWeight: '800' }}>FAQs ❓</h3>
-         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {faqs.map((faq, idx) => (
-                <div key={idx} className="faq-card" onClick={() => setOpenFaq(openFaq === idx ? null : idx)}>
-                   <div className="flex-between">
-                       <h4 style={{ fontSize: '15px', fontWeight: '700', color: '#111111' }}>{faq.q}</h4>
-                       <ChevronDown size={18} style={{ transform: openFaq === idx ? 'rotate(180deg)' : 'rotate(0deg)', transition: '0.2s' }} />
-                   </div>
-                   {openFaq === idx && (
-                       <p className="mt-1" style={{ color: '#777', fontSize: '14px', lineHeight: '1.5' }}>{faq.a}</p>
-                   )}
-                </div>
-            ))}
-         </div>
-      </div>
-
-      {/* Contact Section */}
-      <div className="mb-1">
-         <h3 className="mb-2" style={{ fontSize: '20px', fontWeight: '800' }}>Get in Touch 📞</h3>
-         <div className="contact-card">
-              <div className="flex-center mb-2" style={{ justifyContent: 'flex-start', gap: '12px' }}>
-                  <div style={{ background: 'rgba(255, 71, 11, 0.1)', padding: '12px', borderRadius: '50%' }}>
+      {/* Elegant Contact Section */}
+      <div className="card mb-4" style={{ background: '#111111', color: 'white' }}>
+         <h3 className="mb-3" style={{ color: 'white', fontSize: '1.3rem' }}>Need Help? 📞</h3>
+         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div className="flex-center" style={{ justifyContent: 'flex-start', gap: '15px' }}>
+                  <div style={{ background: 'rgba(255,255,255,0.1)', padding: '12px', borderRadius: '14px' }}>
                      <Phone size={20} color="var(--primary)" />
                   </div>
                   <div>
-                      <p style={{ fontWeight: '700', color: '#111111' }}>Phone Support</p>
-                      <p style={{ color: '#777', fontSize: '13px' }}>+92 331 9068234</p>
+                      <p style={{ fontWeight: '700', fontSize: '1rem' }}>+92 331 9068234</p>
+                      <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>Available 24/7</p>
                   </div>
               </div>
-              <div className="flex-center mb-2" style={{ justifyContent: 'flex-start', gap: '12px' }}>
-                  <div style={{ background: 'rgba(255, 71, 11, 0.1)', padding: '12px', borderRadius: '50%' }}>
+              <div className="flex-center" style={{ justifyContent: 'flex-start', gap: '15px' }}>
+                  <div style={{ background: 'rgba(255,255,255,0.1)', padding: '12px', borderRadius: '14px' }}>
                      <Mail size={20} color="var(--primary)" />
                   </div>
                   <div>
-                      <p style={{ fontWeight: '700', color: '#111111' }}>Email Us</p>
-                      <p style={{ color: '#777', fontSize: '13px' }}>orders@zaibielite.com</p>
-                  </div>
-              </div>
-              <div className="flex-center" style={{ justifyContent: 'flex-start', gap: '12px' }}>
-                  <div style={{ background: 'rgba(255, 71, 11, 0.1)', padding: '12px', borderRadius: '50%' }}>
-                     <Map size={20} color="var(--primary)" />
-                  </div>
-                  <div>
-                      <p style={{ fontWeight: '700', color: '#111111' }}>Food Kitchen</p>
-                      <p style={{ color: '#777', fontSize: '13px' }}>123 Main Street, Food District</p>
+                      <p style={{ fontWeight: '700', fontSize: '1rem' }}>orders@zaibielite.com</p>
+                      <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem' }}>Response in 15m</p>
                   </div>
               </div>
          </div>
@@ -249,3 +216,4 @@ const Home = () => {
 };
 
 export default Home;
+

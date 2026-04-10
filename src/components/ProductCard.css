@@ -2,53 +2,61 @@
   background-color: var(--surface);
   border-radius: var(--radius-large);
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(0,0,0,0.02);
 }
 .product-card:active {
-  transform: scale(0.98);
+  transform: scale(0.95);
 }
 
 .product-image-container {
   position: relative;
   width: 100%;
-  height: 140px;
-  padding: 8px;
+  height: 160px;
+  padding: 10px;
 }
 
 .product-image-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-large);
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image-container img {
+  transform: scale(1.1);
 }
 
 .delivery-badge {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
-  background-color: rgba(255,255,255,0.95);
-  padding: 4px 8px;
+  top: 18px;
+  left: 18px;
+  background-color: rgba(255,255,255,0.9);
+  backdrop-filter: blur(5px);
+  padding: 5px 10px;
   border-radius: var(--radius-pill);
   font-size: 10px;
-  font-weight: 700;
-  box-shadow: var(--shadow-sm);
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   gap: 4px;
-  color: var(--text-primary);
+  color: #111111;
+  z-index: 2;
 }
 
 .product-info {
-  padding: 12px 16px 16px;
+  padding: 4px 18px 18px;
 }
 
 .product-name {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -56,19 +64,25 @@
 }
 
 .product-price {
-  font-size: 18px;
-  font-weight: 800;
-  color: #111111;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: -0.02em;
 }
 
 .add-btn {
-  background-color: var(--primary);
+  background: var(--primary-gradient);
   color: white;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 8px rgba(255, 71, 11, 0.3);
+  box-shadow: 0 8px 16px rgba(255, 71, 11, 0.2);
+  transition: transform 0.2s;
+}
+
+.add-btn:hover {
+  transform: rotate(90deg);
 }

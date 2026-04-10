@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Menu as MenuIcon, ShoppingCart, User, Tag } from 'lucide-react';
+import { Home, Menu as MenuIcon, ShoppingCart, DownloadCloud, Tag } from 'lucide-react';
 import './BottomNav.css';
 
-const BottomNav = () => {
+const BottomNav = ({ onInstall }) => {
   return (
     <div className="bottom-nav">
       <NavLink to="/" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
@@ -22,12 +22,17 @@ const BottomNav = () => {
         <ShoppingCart size={24} />
         <span>Cart</span>
       </NavLink>
-      <NavLink to="/profile" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
-        <User size={24} />
-        <span>Profile</span>
-      </NavLink>
+      <button 
+        onClick={onInstall} 
+        className="nav-item" 
+        style={{ background: 'none', border: 'none', cursor: 'pointer', outline: 'none' }}
+      >
+        <DownloadCloud size={24} color="var(--primary)" />
+        <span style={{ color: 'var(--primary)', fontWeight: '600' }}>Install</span>
+      </button>
     </div>
   );
 };
 
 export default BottomNav;
+
